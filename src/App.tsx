@@ -8,6 +8,7 @@ function App(): JSX.Element {
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
+
             <h1>This is my Apex Legends character personality tier list</h1>
             <img
                 src="https://cdn.charlieintel.com/wp-content/uploads/2020/12/29135306/apex-legends-5.jpg"
@@ -53,7 +54,7 @@ function App(): JSX.Element {
                 {" "}
                 Log Hello World{" "}
             </Button>
-            <p> William Hart </p>
+          <p> William Hart </p>
         </div>
     );
 }

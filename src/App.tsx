@@ -12,7 +12,7 @@ function App(): JSX.Element {
             <img
                 src="https://cdn.charlieintel.com/wp-content/uploads/2020/12/29135306/apex-legends-5.jpg"
                 width="260"
-                alt="Apex Legends Roster"
+                alt="Apex Legends Roster "
             />
             <Container>
                 <Row>

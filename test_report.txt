@@ -2,17 +2,19 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
+PASS src/functions.test.ts
 PASS src/text.test.tsx
 PASS src/App.test.tsx
-----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
-----------|---------|----------|---------|---------|-------------------
-All files |      50 |      100 |      50 |      50 |                   
- App.tsx  |      50 |      100 |      50 |      50 | 53                
-----------|---------|----------|---------|---------|-------------------
+--------------|---------|----------|---------|---------|-------------------
+File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------|---------|----------|---------|---------|-------------------
+All files     |      95 |      100 |   85.71 |      95 |                   
+ App.tsx      |      50 |      100 |      50 |      50 | 53                
+ functions.ts |     100 |      100 |     100 |     100 |                   
+--------------|---------|----------|---------|---------|-------------------
 
-Test Suites: 2 passed, 2 total
-Tests:       2 passed, 2 total
+Test Suites: 3 passed, 3 total
+Tests:       7 passed, 7 total
 Snapshots:   0 total
-Time:        2.686 s
+Time:        2.518 s
 Ran all test suites.

@@ -5,7 +5,13 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    //return numbers.length === 0 ? numbers : newA;
+    if (numbers.length === 0) return [];
+    const newA = [numbers[0], numbers[numbers.length - 1]];
+    //const newA: number[] = [];
+    //newA.push(numbers[0]);
+    //newA.push(numbers[numbers.length - 1]);
+    return newA;
 }
 
 /**
@@ -13,7 +19,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const triple = numbers.map((numbers: number): number => numbers * 3);
+    return triple;
 }
 
 /**
@@ -21,7 +28,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const ints = numbers.map((numbers: string): number =>
+        isNaN(parseInt(numbers)) === true ? 0 : parseInt(numbers)
+    );
+    return ints;
 }
 
 /**
@@ -32,7 +42,14 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    if (amounts.length === 0) return [];
+    const no$ = amounts.map((amounts: string): string =>
+        amounts[0] === "$" ? amounts.slice(1) : amounts
+    );
+    const strings = no$.map((no$: string): number =>
+        isNaN(parseInt(no$)) === true ? 0 : parseInt(no$)
+    );
+    return strings;
 };
 
 /**
@@ -41,7 +58,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const arr = messages.filter(
+        (messages: string): boolean => messages[messages.length - 1] !== "?"
+    );
+    const arr2 = arr.map((arr: string): string =>
+        arr[arr.length - 1] === "!" ? arr.toUpperCase() : arr
+    );
+    return arr2;
 };
 
 /**

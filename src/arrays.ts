@@ -129,18 +129,24 @@ export function injectPositive(values: number[]): number[] {
     let negIndex = 0;
     let sum = 0;
     negIndex = values.findIndex((values: number): boolean => values < 0);
-    if (negIndex === 0) {
+    const sumArr = values.slice(0, negIndex);
+    const otherArr = values.slice(negIndex + 1, values.length);
+    if (negIndex === -1) {
         sum = values.reduce(
             (totalSum1: number, num1: number) => totalSum1 + num1,
             0
         );
     } else {
-        const sumArr = values.slice(0, negIndex);
         sum = sumArr.reduce(
             (totalSum2: number, num2: number) => totalSum2 + num2,
             0
         );
     }
-    const ans = [...values, sum];
+    let ans = [];
+    if (negIndex === -1) {
+        ans = [...values, sum];
+    } else {
+        ans = [...sumArr, values[negIndex], sum, ...otherArr];
+    }
     return ans;
 }

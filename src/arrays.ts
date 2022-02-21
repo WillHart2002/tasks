@@ -72,7 +72,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const short = words.filter((words: string): boolean => words.length < 4);
+    return short.length;
 }
 
 /**
@@ -81,7 +82,13 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length === 0) return true;
+    const rgb = colors.filter(
+        (colors: string): boolean =>
+            colors === "red" || colors === "blue" || colors === "green"
+    );
+    if (colors.length === rgb.length) return true;
+    else return false;
 }
 
 /**
@@ -92,7 +99,21 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) return "0=0";
+    const sum = addends.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    const txtsum = sum.toString() + "=";
+    const arr = [...addends];
+    const firstnum = arr.shift();
+    const firstTxtNum = firstnum?.toString();
+    const txtnums = arr.map((arr: number): string => "+" + arr.toString());
+    const txtnum = txtnums.reduce(
+        (totalString: string, line: string) => totalString + line,
+        ""
+    );
+    return txtsum + firstTxtNum + txtnum;
 }
 
 /**
@@ -105,5 +126,21 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    let negIndex = 0;
+    let sum = 0;
+    negIndex = values.findIndex((values: number): boolean => values < 0);
+    if (negIndex === 0) {
+        sum = values.reduce(
+            (totalSum1: number, num1: number) => totalSum1 + num1,
+            0
+        );
+    } else {
+        const sumArr = values.slice(0, negIndex);
+        sum = sumArr.reduce(
+            (totalSum2: number, num2: number) => totalSum2 + num2,
+            0
+        );
+    }
+    const ans = [...values, sum];
+    return ans;
 }

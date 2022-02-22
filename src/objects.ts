@@ -60,7 +60,10 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    const id = question.id.toString() + ":";
+    const name = question.name.slice(0, 10);
+    const ans = id + " " + name;
+    return ans;
 }
 
 /**
@@ -81,7 +84,16 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    const name = "# " + question.name;
+    const body = question.body;
+    let opt = "";
+    if (question.type === "short_answer_question") {
+        opt = "";
+        return name + "\n" + body;
+    } else {
+        opt = question.options.join("\n- ");
+    }
+    return name + "\n" + body + "\n- " + opt;
 }
 
 /**
@@ -89,7 +101,8 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const ans = { ...question, name: newName };
+    return ans;
 }
 
 /**
@@ -98,7 +111,8 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const ans = { ...question, published: question.published ? false : true };
+    return ans;
 }
 
 /**
@@ -108,7 +122,9 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const name1 = "Copy of " + oldQuestion.name;
+    const ans = { ...oldQuestion, id: id, name: name1, published: false };
+    return ans;
 }
 
 /**
@@ -119,7 +135,9 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const opt = [...question.options, newOption];
+    const ans = { ...question, options: opt };
+    return ans;
 }
 
 /**
@@ -136,5 +154,20 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    const body = contentQuestion.body;
+    const type = contentQuestion.type;
+    const options = contentQuestion.options;
+    const expected = contentQuestion.expected;
+    const po = points;
+    const ans = {
+        id: id,
+        name: name,
+        type: type,
+        body: body,
+        expected: expected,
+        options: options,
+        points: po,
+        published: false
+    };
+    return ans;
 }

@@ -2,7 +2,7 @@ import { idText } from "typescript";
 import { urlToHttpOptions } from "url";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -21,14 +21,12 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    let ans = questions.filter(
+    return questions.filter(
         (quest: Question): boolean =>
-            quest.expected !== "" && quest.options !== [] && quest.body !== ""
+            quest.body !== "" ||
+            quest.expected !== "" ||
+            quest.options.length !== 0
     );
-    if (ans === undefined) {
-        ans = [];
-    }
-    return ans;
 }
 
 /***
@@ -255,22 +253,30 @@ export function editOption(
     } else {
         ans = questions.map(
             (quest: Question): Question =>
-                // eslint-disable-next-line prettier/prettier
-                quest.id === targetId
-                    ? {
-                          ...quest,
-                          options: quest.options.splice(
-                              targetOptionIndex,
-                              1,
-                              newOption
-                          )
-                      }
-                    : { ...quest }
+                helper1(quest, targetOptionIndex, newOption, targetId)
         );
     }
     return ans;
 }
 
+export function helper1(
+    quest: Question,
+    targetOptionIndex: number,
+    newOption: string,
+    targetId: number
+): Question {
+    let ans;
+    if (quest.id === targetId) {
+        ans = {
+            ...quest,
+            options: [...quest.options]
+        };
+        quest.options.splice(targetOptionIndex, 1, newOption);
+    } else {
+        ans = { ...quest };
+    }
+    return ans;
+}
 /***
  * Consumes an array of questions, and produces a new array based on the original array.
  * The only difference is that the question with id `targetId` should now be duplicated, with
@@ -282,5 +288,17 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
+    const myQuest = [...questions];
+    const index = questions.findIndex(
+        (quest: Question): boolean => quest.id === targetId
+    );
+    const dup = questions.find(
+        (quest: Question): boolean => quest.id === targetId
+    );
+    if (dup !== undefined) {
+        const dup2 = duplicateQuestion(newId, dup);
+        myQuest.splice(1 + index, 0, { ...dup2 });
+        return myQuest;
+    }
     return [];
 }

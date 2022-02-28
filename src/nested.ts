@@ -1,5 +1,3 @@
-import { idText } from "typescript";
-import { urlToHttpOptions } from "url";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { duplicateQuestion, makeBlankQuestion } from "./objects";

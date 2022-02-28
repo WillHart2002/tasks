@@ -271,7 +271,7 @@ export function helper1(
             ...quest,
             options: [...quest.options]
         };
-        quest.options.splice(targetOptionIndex, 1, newOption);
+        ans.options.splice(targetOptionIndex, 1, newOption);
     } else {
         ans = { ...quest };
     }

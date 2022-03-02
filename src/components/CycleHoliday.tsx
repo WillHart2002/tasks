@@ -47,7 +47,7 @@ export function CycleHoliday(): JSX.Element {
         <div>
             <div>
                 <span>
-                    Holiday: {emoji}
+                    Holiday: {emoji()}
                     {holiday}
                 </span>
             </div>

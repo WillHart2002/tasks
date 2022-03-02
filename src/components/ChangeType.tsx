@@ -14,12 +14,14 @@ export function ChangeType(): JSX.Element {
     return (
         <div>
             <Button onClick={flipType}> Change type </Button>
-            Current type:
-            {questType === "short_answer_question" ? (
-                <span> Short Answer </span>
-            ) : (
-                <span> Multiple Choice </span>
-            )}
+            <div>
+                Current type:
+                {questType === "short_answer_question" ? (
+                    <span> Short Answer </span>
+                ) : (
+                    <span> Multiple Choice </span>
+                )}
+            </div>
         </div>
     );
 }

@@ -29,7 +29,9 @@ export function StartAttempt(): JSX.Element {
             <Button onClick={mulligan} disabled={quizProg === true}>
                 Mulligan
             </Button>
-            Number of Attempts: <span> {numAttempts} </span>
+            <div>
+                Number of Attempts: <span> {numAttempts} </span>
+            </div>
         </div>
     );
 }

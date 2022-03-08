@@ -9,14 +9,6 @@ type ChangeEvent = React.ChangeEvent<
 export function GiveAttempts(): JSX.Element {
     const [attemptsLeft, setAttemptsLeft] = useState<number>(3);
     const [requestAttempts, setRequestAttempts] = useState<number>(0);
-
-    function use(): void {
-        setAttemptsLeft(attemptsLeft - 1);
-    }
-    function gain(): void {
-        setAttemptsLeft(attemptsLeft + requestAttempts);
-    }
-
     return (
         <div>
             <h3>Give Attempts</h3>
@@ -35,10 +27,19 @@ export function GiveAttempts(): JSX.Element {
                 </Form.Group>
             </div>
             <div>
-                <Button onClick={use} disabled={attemptsLeft === 0}>
+                <Button
+                    onClick={() => setAttemptsLeft(attemptsLeft - 1)}
+                    disabled={attemptsLeft === 0}
+                >
                     use
                 </Button>
-                <Button onClick={gain}>gain</Button>
+                <Button
+                    onClick={() =>
+                        setAttemptsLeft(attemptsLeft + requestAttempts)
+                    }
+                >
+                    gain
+                </Button>
             </div>
             <div>you have {attemptsLeft} attempts</div>
         </div>

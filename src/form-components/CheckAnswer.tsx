@@ -20,7 +20,11 @@ export function CheckAnswer({
             <div>
                 <Form.Group controlId="formResponse">
                     <Form.Label>What is the asnwer?</Form.Label>
-                    <Form.Control value={response} onChange={updateResponse} />
+                    <Form.Control
+                        type="text"
+                        value={response}
+                        onChange={updateResponse}
+                    />
                 </Form.Group>
             </div>
             <div>

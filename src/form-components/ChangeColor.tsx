@@ -105,9 +105,16 @@ export function ChangeColor(): JSX.Element {
                 value="cyan"
                 checked={color === "cyan"}
             />
-            <div data-testid="colored-box">
-                <span>
-                    You have choosen{" "}
+            <div>
+                You have choosen{" "}
+                <span
+                    data-testid="colored-box"
+                    style={{
+                        backgroundColor: Colors.find(
+                            (colormap: string): boolean => colormap === color
+                        )
+                    }}
+                >
                     {Colors.find(
                         (colormap: string): boolean => colormap === color
                     )}

@@ -9,6 +9,7 @@ function App(): JSX.Element {
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <ShowHideTasks></ShowHideTasks>
+            <img src="./quizzer./Sketch.JPG"></img>
         </div>
     );
 }

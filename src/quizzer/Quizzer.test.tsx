@@ -11,3 +11,13 @@ describe("Quizzer Tests", () => {
         // Add more tests, more components, more test files!
     });
 });
+
+describe("Sketch test", () => {
+    beforeEach(() => {
+        render(<Quizzer />);
+    });
+    test("The sketch renders", () => {
+        const isImg = screen.getAllByAltText("Should be a picture here");
+        expect(isImg).toEqual("Should be a picture here");
+    });
+});

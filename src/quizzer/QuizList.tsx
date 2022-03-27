@@ -1,23 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { QuizInterface } from "../interfaces/quiz_int";
-import { Question } from "../interfaces/question";
+import { spongeQuiz } from "../interfaces/quiz_int";
+//import { Question } from "../interfaces/question";
 import { Quiz } from "./Quiz";
-
-const spongeQuiz = [
-    {
-        name: "Spongebob Quiz",
-        description: "A quiz about everything Spongbob",
-        points: 10,
-        questions: []
-    },
-    {
-        name: "sponge Quiz",
-        description: "A quiz about sponges",
-        points: 10,
-        questions: []
-    }
-];
 
 interface QuizListProps {
     setQuizzes: (newQuiz: QuizInterface[]) => void;
@@ -38,7 +24,7 @@ function addQuiz({ setQuizzes, quizzes }: QuizListProps): void {
 }
 
 export function QuizList(): JSX.Element {
-    const [quizzes, setQuizzes] = useState<QuizInterface[]>(spongeQuiz);
+    const [quizzes, setQuizzes] = useState<QuizInterface[]>([spongeQuiz]);
     return (
         <div>
             {quizzes.map((quiz: QuizInterface) => (

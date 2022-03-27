@@ -1,32 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+//import { QuestionType } from "../interfaces/question";
 import { Question } from "../interfaces/question";
+import { spongeQuest1 } from "../interfaces/question";
+import { spongeQuest2 } from "../interfaces/question";
 import { QuizInterface } from "../interfaces/quiz_int";
 import { QuestionComponent } from "./QuestionComponent";
-
-const spongeQuests = [
-    {
-        id: 101,
-        name: "What is the name of Spongebobs pet",
-        body: "it rhymes with Harry",
-        type: "multiple_choice_question",
-        options: ["sparry", "lary", "gary"],
-        expected: "gary",
-        points: 0,
-        published: false
-    },
-    {
-        id: 102,
-        name: "What is the color of Spongebobs tie",
-        body: "some description",
-        type: "multiple_choice_question",
-        options: ["blue", "red", "green"],
-        expected: "red",
-        points: 0,
-        published: false
-    }
-];
 
 interface QuizProps {
     setQuestions: (newQuestions: Question[]) => void;
@@ -37,12 +17,12 @@ function addQuestion({ setQuestions, Questions }: QuizProps): void {
     const newQuestions = [
         ...Questions,
         {
-            id: 7,
+            id: Math.floor(Math.random() * 100),
             name: "Blank Question",
             body: "Blank Question Body",
             type: "multiple_choice_question",
-            options: [],
-            expected: "",
+            options: ["a", "b", "c", "d"],
+            expected: "c",
             points: 0,
             published: false
         }
@@ -56,9 +36,15 @@ export function Quiz({
     points,
     questions
 }: QuizInterface): JSX.Element {
-    const [Questions, setQuestions] = useState<Question[]>(spongeQuests);
+    const [Questions, setQuestions] = useState<Question[]>([
+        spongeQuest1,
+        spongeQuest2
+    ]);
     return (
         <div>
+            <h2> {name} </h2>
+            <div> {description} </div>
+            <h5>points: {points}</h5>
             {questions.map((Quest: Question) => (
                 <div key={Quest.id}>
                     <QuestionComponent
@@ -75,8 +61,9 @@ export function Quiz({
             ))}
             <Button onClick={() => addQuestion({ setQuestions, Questions })}>
                 {" "}
-                add quiz{" "}
+                add question{" "}
             </Button>
+            <hr></hr>
         </div>
     );
 }

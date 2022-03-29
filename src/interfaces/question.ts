@@ -20,25 +20,3 @@ export interface Question {
     /** Whether or not this question is ready to display to students */
     published: boolean;
 }
-
-export const spongeQuest1 = {
-    id: 101,
-    name: "What is the name of Spongebobs pet?",
-    body: "it rhymes with Harry",
-    type: "multiple_choice_question",
-    options: ["sparry", "lary", "gary"],
-    expected: "gary",
-    points: 5,
-    published: false
-};
-
-export const spongeQuest2 = {
-    id: 102,
-    name: "What is the color of Spongebobs tie?",
-    body: "some description",
-    type: "short_answer_question",
-    options: [],
-    expected: "red",
-    points: 5,
-    published: false
-};

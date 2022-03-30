@@ -1,14 +1,68 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { multQuest } from "../interfaces/multQuest";
-import { Question } from "../interfaces/question";
+import { Question } from "../interfaces/myQuestion";
 import { shortQuest } from "../interfaces/shortQuest";
 
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
 
-export function ShortAnswerQuest({ expected }: shortQuest): JSX.Element {
+interface QuestComponentProps {
+    question: Question;
+    questions: Question[];
+    setQuestions: (newQuestions: Question[]) => void;
+    //setIsCorrect: (newCorrectPoints: boolean) => void;
+    //isCorrect: boolean;
+}
+
+export function QuestionComponent({
+    question,
+    questions,
+    setQuestions
+}: QuestComponentProps): JSX.Element {
+    const [response, setResponse] = useState<string>("");
+    function updateResponse(event: ChangeEvent) {
+        setResponse(event.target.value);
+    }
+    return (
+        <div>
+            <div>{question.name}</div>
+            <div>
+                {" "}
+                points: {question.points}, published: {question.published}
+            </div>
+            {question.type === "multiple_choice_question" ? (
+                <Form.Group controlId="multQuestion">
+                    <Form.Select value={response} onChange={updateResponse}>
+                        {question.options.map((choice: string) => (
+                            <option key={choice} value={choice}>
+                                {choice}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+            ) : (
+                <Form.Group controlId="formResponse">
+                    <Form.Control
+                        type="text"
+                        value={response}
+                        onChange={updateResponse}
+                    />
+                </Form.Group>
+            )}
+            <div>
+                {response === question.expected && <div> ✔️ </div>}
+                {response !== question.expected && <div> ❌ </div>}
+            </div>
+        </div>
+    );
+}
+/*
+export function ShortAnswerQuest({
+    expected,
+    correct
+}: shortQuest): JSX.Element {
     const [response, setResponse] = useState<string>("");
     function updateResponse(event: ChangeEvent) {
         setResponse(event.target.value);
@@ -25,8 +79,8 @@ export function ShortAnswerQuest({ expected }: shortQuest): JSX.Element {
                 </Form.Group>
             </div>
             <div>
-                {expected === response && <div> ✔️ </div>}
-                {expected !== response && <div> ❌ </div>}
+                {response === expected && <div> ✔️ </div>}
+                {response !== expected && <div> ❌ </div>}
             </div>
         </div>
     );
@@ -34,14 +88,13 @@ export function ShortAnswerQuest({ expected }: shortQuest): JSX.Element {
 
 export function MultipleChoiceQuestion({
     options,
-    expected
+    expected,
+    correct
 }: multQuest): JSX.Element {
     const [choice, setChoice] = useState<string>(options[0]);
-
     function updateChoice(event: ChangeEvent) {
         setChoice(event.target.value);
     }
-
     return (
         <div>
             <Form.Group controlId="multQuestion">
@@ -53,12 +106,14 @@ export function MultipleChoiceQuestion({
                     ))}
                 </Form.Select>
             </Form.Group>
-            <div> {expected === choice && <div> ✔️ </div>} </div>
-            <div> {expected !== choice && <div> ❌ </div>} </div>
+            <div>
+                {choice === expected && <div> ✔️ </div>}
+                {choice !== expected && <div> ❌ </div>}
+            </div>
         </div>
     );
 }
-
+/*
 export function QuestionComponent({
     id,
     name,
@@ -67,8 +122,11 @@ export function QuestionComponent({
     options,
     expected,
     points,
-    published
+    published,
+    correct,
+    correctPoints
 }: Question): JSX.Element {
+    for editing
     const [idState, newIDState] = useState<number>(0);
     const [nameState, newNameState] = useState<string>("name here");
     const [bodyState, newBodyState] = useState<string>("body here");
@@ -86,7 +144,9 @@ export function QuestionComponent({
     const [publishedState, newPublishedState] = useState<boolean>(false);
     return (
         <div>
-            <div>{name}</div>
+            <div>
+                {name}, accumulated points: {correctPoints}
+            </div>
             <div>
                 {" "}
                 points: {points}, published: {published}{" "}
@@ -95,11 +155,16 @@ export function QuestionComponent({
                 <MultipleChoiceQuestion
                     options={options}
                     expected={expected}
+                    correct={correct}
                 ></MultipleChoiceQuestion>
             )}
             {type === "short_answer_question" && (
-                <ShortAnswerQuest expected={expected}></ShortAnswerQuest>
+                <ShortAnswerQuest
+                    expected={expected}
+                    correct={correct}
+                ></ShortAnswerQuest>
             )}
         </div>
     );
 }
+*/

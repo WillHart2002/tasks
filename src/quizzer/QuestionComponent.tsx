@@ -22,16 +22,33 @@ export function QuestionComponent({
     setQuestions
 }: QuestComponentProps): JSX.Element {
     const [response, setResponse] = useState<string>("");
+    //all editing states
+    const [publishedState, newPublishedState] = useState<boolean>(
+        question.published
+    );
+    const [idState, newIDState] = useState<number>(0);
+    const [nameState, newNameState] = useState<string>("name here");
+    const [bodyState, newBodyState] = useState<string>("body here");
+    const [typeState, newTypeState] = useState<string>(
+        "multiple_choice_question"
+    );
+    const [optionState, newOptionState] = useState<string[]>([
+        "a",
+        "b",
+        "c",
+        "d"
+    ]);
+    const [expectedState, newExpectedState] = useState<string>("c");
+    const [pointsState, newPointsState] = useState<number>(0);
+    //seeeeesh
     function updateResponse(event: ChangeEvent) {
         setResponse(event.target.value);
     }
     return (
         <div>
             <div>{question.name}</div>
-            <div>
-                {" "}
-                points: {question.points}, published: {question.published}
-            </div>
+            <div> points: {question.points}</div>
+            <div> hint (question body): {question.body} </div>
             {question.type === "multiple_choice_question" ? (
                 <Form.Group controlId="multQuestion">
                     <Form.Select value={response} onChange={updateResponse}>

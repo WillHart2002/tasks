@@ -12,7 +12,7 @@ export interface QuizInterface {
 
 export const spongeQuiz = {
     name: "Spongebob Quiz",
-    description: "A quiz about everything Spongbob",
+    description: "A quiz about everything Spongebob Squarepants",
     points: 10,
     questions: [spongeQuest1, spongeQuest2],
     correctQuizPoints: 0

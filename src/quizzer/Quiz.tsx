@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Question } from "../interfaces/myQuestion";
-import { spongeQuest1 } from "../interfaces/myQuestion";
-import { spongeQuest2 } from "../interfaces/myQuestion";
 import { QuizInterface } from "../interfaces/quiz_int";
 import { QuestionComponent } from "./QuestionComponent";
 
@@ -32,6 +30,7 @@ function checkCorrect(
 
 export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
     const [questions, setQuestions] = useState<Question[]>(quiz.questions);
+    const [visible, setVisible] = useState<boolean>(false);
     function addQuestion(): void {
         const blankQuestion: Question = {
             id: Math.floor(Math.random() * 100),
@@ -42,26 +41,38 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
             expected: "c",
             points: 0,
             published: false,
-            correct: false,
-            correctPoints: 0
+            correct: false
         };
         const newQuestions = [...questions, blankQuestion];
         setQuestions(newQuestions);
     }
+    function isVisible(): void {
+        if (visible === false) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }
     return (
         <div>
             <h3> {quiz.name} </h3>
-            <h5> points: {quiz.points} </h5>
-            {questions.map((quest: Question) => (
-                <div key={quest.id}>
-                    <QuestionComponent
-                        question={quest}
-                        questions={questions}
-                        setQuestions={setQuestions}
-                    ></QuestionComponent>
-                </div>
-            ))}
-            <Button onClick={addQuestion}> add question </Button>
+            <div>
+                {" "}
+                {quiz.description} with {quiz.questions.length} questions{" "}
+            </div>
+            {!visible && <Button onClick={isVisible}> enter quiz </Button>}
+            {visible && <Button onClick={isVisible}> exit quiz </Button>}
+            {visible &&
+                questions.map((quest: Question) => (
+                    <div key={quest.id}>
+                        <QuestionComponent
+                            question={quest}
+                            questions={questions}
+                            setQuestions={setQuestions}
+                        ></QuestionComponent>
+                    </div>
+                ))}
+            {visible && <Button onClick={addQuestion}> add question </Button>}
         </div>
     );
 }

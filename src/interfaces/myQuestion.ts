@@ -21,8 +21,6 @@ export interface Question {
     published: boolean;
     //Whether the question is answered right or wrong
     correct: boolean;
-    //total correct points
-    correctPoints: number;
 }
 
 export const spongeQuest1 = {
@@ -41,7 +39,7 @@ export const spongeQuest1 = {
 export const spongeQuest2 = {
     id: 102,
     name: "What is the color of Spongebobs tie?",
-    body: "some description",
+    body: "like a clowns nose",
     type: "short_answer_question",
     options: [],
     expected: "red",

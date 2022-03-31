@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { multQuest } from "../interfaces/multQuest";
+//import { multQuest } from "../interfaces/multQuest";
 import { Question } from "../interfaces/myQuestion";
-import { shortQuest } from "../interfaces/shortQuest";
+//import { shortQuest } from "../interfaces/shortQuest";
 
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
@@ -12,8 +12,6 @@ interface QuestComponentProps {
     question: Question;
     questions: Question[];
     setQuestions: (newQuestions: Question[]) => void;
-    //setIsCorrect: (newCorrectPoints: boolean) => void;
-    //isCorrect: boolean;
 }
 
 export function QuestionComponent({
@@ -22,33 +20,208 @@ export function QuestionComponent({
     setQuestions
 }: QuestComponentProps): JSX.Element {
     const [response, setResponse] = useState<string>("");
-    //all editing states
+    //const [correctPoints, setCorrectPoints] = useState<number>(0);
+    //all editing states and editing state
     const [publishedState, newPublishedState] = useState<boolean>(
         question.published
     );
-    const [idState, newIDState] = useState<number>(0);
-    const [nameState, newNameState] = useState<string>("name here");
-    const [bodyState, newBodyState] = useState<string>("body here");
-    const [typeState, newTypeState] = useState<string>(
-        "multiple_choice_question"
+    const [nameState, newNameState] = useState<string>(question.name);
+    const [bodyState, newBodyState] = useState<string>(question.body);
+    const [typeState, newTypeState] = useState<string>(question.type);
+    const [optionState, newOptionState] = useState<string>(
+        question.options.join("-")
     );
-    const [optionState, newOptionState] = useState<string[]>([
-        "a",
-        "b",
-        "c",
-        "d"
-    ]);
-    const [expectedState, newExpectedState] = useState<string>("c");
-    const [pointsState, newPointsState] = useState<number>(0);
+    const [expectedState, newExpectedState] = useState<string>(
+        question.expected
+    );
+    const [pointsState, newPointsState] = useState<number>(question.points);
+    const [editMode, setEditMode] = useState<boolean>(false);
     //seeeeesh
     function updateResponse(event: ChangeEvent) {
         setResponse(event.target.value);
     }
+    function switchQuestType(): void {
+        if (typeState === "multiple_choice_question") {
+            newTypeState("short_answer_question");
+        } else {
+            newTypeState("multiple_choice_question");
+        }
+    }
+    function clearAns(): void {
+        setResponse("");
+    }
+    function shiftQuestUp(): void {
+        const questIndex = questions.findIndex(
+            (quest: Question): boolean => quest.id === question.id
+        );
+        if (questIndex != 0) {
+            const questArray = questions.filter(
+                (quest: Question): boolean => quest.id !== question.id
+            );
+            questArray.splice(questIndex - 1, 0, question);
+            setQuestions(questArray);
+        }
+    }
+    function shiftQuestDown(): void {
+        const questIndex = questions.findIndex(
+            (quest: Question): boolean => quest.id === question.id
+        );
+        if (questIndex != questions.length - 1) {
+            const questArray = questions.filter(
+                (quest: Question): boolean => quest.id !== question.id
+            );
+            questArray.splice(questIndex + 1, 0, question);
+            setQuestions(questArray);
+        }
+    }
+    function deleteQuest(): void {
+        const modifiedQuest = questions.filter(
+            (quest: Question): boolean => quest.id !== question.id
+        );
+        setQuestions(modifiedQuest);
+    }
+    function saveQuest(): void {
+        setEditMode(false);
+        const targetQuest = question.id;
+        const questArray = [...questions];
+        const quest = {
+            id: question.id,
+            name: nameState,
+            body: bodyState,
+            type: typeState,
+            options: optionState.split("-"),
+            expected: expectedState,
+            points: pointsState,
+            published: publishedState
+            //correctPoints: correctPoints
+        };
+        const targetIndex = questions.findIndex(
+            (quest: Question): boolean => quest.id === targetQuest
+        );
+        questArray.splice(targetIndex, 1, quest);
+        setQuestions(questArray);
+    }
+    /*
+    function calcPoints(): void {
+        if (response === question.expected) {
+            setCorrectPoints(question.points);
+        }
+    }
+    */
     return (
-        <div>
-            <div>{question.name}</div>
-            <div> points: {question.points}</div>
-            <div> hint (question body): {question.body} </div>
+        <div data-testid="div-question-Component">
+            <div data-testid="div-edit-switch">
+                <Form.Check
+                    data-testid="edit-switch"
+                    type="switch"
+                    id="editMode"
+                    label="Edit question?"
+                    checked={editMode}
+                    onChange={() => setEditMode(!editMode)}
+                />
+            </div>
+            {editMode && (
+                <div data-testid="div-editable-states">
+                    <hr></hr>
+                    <Form.Group controlId="quest-group">
+                        <Form.Label> Question name </Form.Label>
+                        <Form.Control
+                            data-testid="questName-control"
+                            type="text"
+                            value={nameState}
+                            onChange={(event: ChangeEvent) =>
+                                newNameState(event.target.value)
+                            }
+                            disabled={!editMode}
+                        />
+                        <Form.Label> Question body </Form.Label>
+                        <Form.Control
+                            data-testid="questBody-control"
+                            type="text"
+                            value={bodyState}
+                            onChange={(event: ChangeEvent) =>
+                                newBodyState(event.target.value)
+                            }
+                            disabled={!editMode}
+                        />
+                        <Form.Label> Question type </Form.Label>
+                        <Form.Check
+                            type="switch"
+                            data-testid="questType-check"
+                            label="Switch between multiple choice and free response"
+                            checked={typeState === "multiple_choice_question"}
+                            disabled={!editMode}
+                            onChange={switchQuestType}
+                        />
+                        {typeState === "multiple_choice_question" && (
+                            <Form.Group controlId="options-group">
+                                <Form.Label>
+                                    {" "}
+                                    Question options (seperate with - character)
+                                </Form.Label>
+                                <Form.Control
+                                    data-testid="questOptions-control"
+                                    type="text"
+                                    value={optionState}
+                                    onChange={(event: ChangeEvent) =>
+                                        newOptionState(event.target.value)
+                                    }
+                                    disabled={!editMode}
+                                />
+                            </Form.Group>
+                        )}
+                        <Form.Label> Question expected answer </Form.Label>
+                        <Form.Control
+                            data-testid="questExpected-control"
+                            type="text"
+                            value={expectedState}
+                            onChange={(event: ChangeEvent) =>
+                                newExpectedState(event.target.value)
+                            }
+                            disabled={!editMode}
+                        />
+                        <Form.Label> Question points </Form.Label>
+                        <Form.Control
+                            data-testid="questPoints-control"
+                            type="number"
+                            value={pointsState}
+                            onChange={(event: ChangeEvent) =>
+                                newPointsState(
+                                    parseInt(event.target.value) || 0
+                                )
+                            }
+                            disabled={!editMode}
+                        />
+                        <Form.Label> Question published </Form.Label>
+                        <Form.Check
+                            type="switch"
+                            data-testid="questPublished-check"
+                            label="Do you want to publish the question"
+                            checked={publishedState === true}
+                            disabled={!editMode}
+                            onChange={() => newPublishedState(!publishedState)}
+                        />
+                    </Form.Group>
+                    <Button onClick={saveQuest}> save edit </Button>
+                    <hr></hr>
+                </div>
+            )}
+            <strong data-testid="strong-quest-name">{question.name}</strong>
+            <div data-testid="div-quest-points-pub">
+                {" "}
+                points: {question.points}, published:{" "}
+                {question.published ? "true" : "false"}
+            </div>
+            <div data-testid="div-quest-body">
+                {" "}
+                hint (question body): {question.body}{" "}
+            </div>
+            <div data-testid="div-clear-delete-shift-buttons">
+                <Button onClick={clearAns}> Clear answer </Button>
+                <Button onClick={deleteQuest}> Delete question </Button>
+                <Button onClick={shiftQuestUp}> Shift up </Button>
+                <Button onClick={shiftQuestDown}> Shift down </Button>
+            </div>
             {question.type === "multiple_choice_question" ? (
                 <Form.Group controlId="multQuestion">
                     <Form.Select value={response} onChange={updateResponse}>
@@ -68,120 +241,10 @@ export function QuestionComponent({
                     />
                 </Form.Group>
             )}
-            <div>
+            <div data-testid="quest-correct">
                 {response === question.expected && <div> ✔️ </div>}
                 {response !== question.expected && <div> ❌ </div>}
             </div>
         </div>
     );
 }
-/*
-export function ShortAnswerQuest({
-    expected,
-    correct
-}: shortQuest): JSX.Element {
-    const [response, setResponse] = useState<string>("");
-    function updateResponse(event: ChangeEvent) {
-        setResponse(event.target.value);
-    }
-    return (
-        <div>
-            <div>
-                <Form.Group controlId="formResponse">
-                    <Form.Control
-                        type="text"
-                        value={response}
-                        onChange={updateResponse}
-                    />
-                </Form.Group>
-            </div>
-            <div>
-                {response === expected && <div> ✔️ </div>}
-                {response !== expected && <div> ❌ </div>}
-            </div>
-        </div>
-    );
-}
-
-export function MultipleChoiceQuestion({
-    options,
-    expected,
-    correct
-}: multQuest): JSX.Element {
-    const [choice, setChoice] = useState<string>(options[0]);
-    function updateChoice(event: ChangeEvent) {
-        setChoice(event.target.value);
-    }
-    return (
-        <div>
-            <Form.Group controlId="multQuestion">
-                <Form.Select value={choice} onChange={updateChoice}>
-                    {options.map((choice: string) => (
-                        <option key={choice} value={choice}>
-                            {choice}
-                        </option>
-                    ))}
-                </Form.Select>
-            </Form.Group>
-            <div>
-                {choice === expected && <div> ✔️ </div>}
-                {choice !== expected && <div> ❌ </div>}
-            </div>
-        </div>
-    );
-}
-/*
-export function QuestionComponent({
-    id,
-    name,
-    body,
-    type,
-    options,
-    expected,
-    points,
-    published,
-    correct,
-    correctPoints
-}: Question): JSX.Element {
-    for editing
-    const [idState, newIDState] = useState<number>(0);
-    const [nameState, newNameState] = useState<string>("name here");
-    const [bodyState, newBodyState] = useState<string>("body here");
-    const [typeState, newTypeState] = useState<string>(
-        "multiple_choice_question"
-    );
-    const [optionState, newOptionState] = useState<string[]>([
-        "a",
-        "b",
-        "c",
-        "d"
-    ]);
-    const [expectedState, newExpectedState] = useState<string>("c");
-    const [pointsState, newPointsState] = useState<number>(0);
-    const [publishedState, newPublishedState] = useState<boolean>(false);
-    return (
-        <div>
-            <div>
-                {name}, accumulated points: {correctPoints}
-            </div>
-            <div>
-                {" "}
-                points: {points}, published: {published}{" "}
-            </div>
-            {type === "multiple_choice_question" && (
-                <MultipleChoiceQuestion
-                    options={options}
-                    expected={expected}
-                    correct={correct}
-                ></MultipleChoiceQuestion>
-            )}
-            {type === "short_answer_question" && (
-                <ShortAnswerQuest
-                    expected={expected}
-                    correct={correct}
-                ></ShortAnswerQuest>
-            )}
-        </div>
-    );
-}
-*/

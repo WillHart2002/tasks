@@ -7,7 +7,7 @@ export interface QuizInterface {
     description: string; //description of quiz
     points: number; //points a quiz holds
     questions: Question[]; //list of Question objects
-    correctQuizPoints: number; //number of correct points in whole quiz
+    quizId: number; //unique quiz id
 }
 
 export const spongeQuiz = {
@@ -15,5 +15,5 @@ export const spongeQuiz = {
     description: "A quiz about everything Spongebob Squarepants",
     points: 10,
     questions: [spongeQuest1, spongeQuest2],
-    correctQuizPoints: 0
+    quizId: 24
 };

@@ -20,7 +20,7 @@ export interface Question {
     /** Whether or not this question is ready to display to students */
     published: boolean;
     //Whether the question is answered right or wrong
-    correct: boolean;
+    //correctPoints: number;
 }
 
 export const spongeQuest1 = {
@@ -31,9 +31,8 @@ export const spongeQuest1 = {
     options: ["sparry", "lary", "gary"],
     expected: "gary",
     points: 5,
-    published: false,
-    correct: false,
-    correctPoints: 0
+    published: false
+    //correctPoints: 0
 };
 
 export const spongeQuest2 = {
@@ -44,7 +43,6 @@ export const spongeQuest2 = {
     options: [],
     expected: "red",
     points: 5,
-    published: false,
-    correct: false,
-    correctPoints: 0
+    published: false
+    //correctPoints: 0
 };

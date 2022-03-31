@@ -1,14 +1,13 @@
-import { queryByTestId } from "@testing-library/react";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Question } from "../interfaces/myQuestion";
+//import { Question } from "../interfaces/myQuestion";
 import { QuizInterface } from "../interfaces/quiz_int";
 import { spongeQuiz } from "../interfaces/quiz_int";
 import { Quiz } from "./Quiz";
 
 export function QuizList(): JSX.Element {
     const [quizzes, setQuizzes] = useState<QuizInterface[]>([spongeQuiz]);
-    const [totalPoints, setTotalPoints] = useState<number>(0);
+    //const [totalPoints, setTotalPoints] = useState<number>(0);
     function addQuiz(): void {
         const newQuizzes = [
             ...quizzes,
@@ -17,27 +16,29 @@ export function QuizList(): JSX.Element {
                 description: "Empty Quiz Description",
                 points: 0,
                 questions: [],
-                correctQuizPoints: 0
+                quizId: Math.floor(Math.random() * 100)
             }
         ];
         setQuizzes(newQuizzes);
     }
-    function accumulatePoints(): void {
+    /*
+    function checkPoints(): void {
         quizzes.map((quiz: QuizInterface) =>
             quiz.questions.map((quest: Question) =>
-                quest.correct === true
-                    ? setTotalPoints(totalPoints + quest.points)
+                quest.correctPoints > 0
+                    ? setTotalPoints(totalPoints + quest.correctPoints)
                     : setTotalPoints(totalPoints)
             )
         );
     }
+    */
     return (
         <div>
             <h1> Quizzer </h1>
             <span>
                 {" "}
-                total points: {totalPoints}{" "}
-                <Button onClick={accumulatePoints}> recalculate points </Button>
+                total points: 0{/*totalPoints*/}{" "}
+                <Button> recalculate points </Button>
             </span>
             <hr></hr>
             {quizzes.map((quiz: QuizInterface) => (
@@ -54,35 +55,3 @@ export function QuizList(): JSX.Element {
         </div>
     );
 }
-/*
-function checkPoints({ quizzes, setPoints, points }: QuizListProps): void {
-    quizzes.map((quiz: QuizInterface) =>
-        setPoints(points + quiz.correctQuizPoints)
-    );
-}
-export function QuizList(): JSX.Element {
-    const [quizzes, setQuizzes] = useState<QuizInterface[]>([spongeQuiz]);
-    //const [points, setPoints] = useState<number>(0);
-    return (
-        <div>
-            {checkPoints}
-            <h4> Total points: {points} </h4>
-            {quizzes.map((quiz: QuizInterface) => (
-                <div key={quiz.name}>
-                    <Quiz
-                        name={quiz.name}
-                        description={quiz.description}
-                        points={quiz.points}
-                        questions={quiz.questions}
-                        correctQuizPoints={quiz.correctQuizPoints}
-                    ></Quiz>
-                </div>
-            ))}
-            <Button onClick={() => addQuiz({ setQuizzes, quizzes })}>
-                {" "}
-                add quiz{" "}
-            </Button>
-        </div>
-    );
-}
-*/

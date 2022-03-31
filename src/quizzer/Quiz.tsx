@@ -1,82 +1,106 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
-import { Question } from "../interfaces/question";
+import { Button, Form } from "react-bootstrap";
+import { Question } from "../interfaces/myQuestion";
 import { QuizInterface } from "../interfaces/quiz_int";
 import { QuestionComponent } from "./QuestionComponent";
 
-const spongeQuests = [
-    {
-        id: 101,
-        name: "What is the name of Spongebobs pet",
-        body: "it rhymes with Harry",
-        type: "multiple_choice_question",
-        options: ["sparry", "lary", "gary"],
-        expected: "gary",
-        points: 0,
-        published: false
-    },
-    {
-        id: 102,
-        name: "What is the color of Spongebobs tie",
-        body: "some description",
-        type: "multiple_choice_question",
-        options: ["blue", "red", "green"],
-        expected: "red",
-        points: 0,
-        published: false
-    }
-];
-
 interface QuizProps {
-    setQuestions: (newQuestions: Question[]) => void;
-    Questions: Question[];
+    quiz: QuizInterface;
+    quizzes: QuizInterface[];
+    setQuizzes: (newQuizzes: QuizInterface[]) => void;
 }
 
-function addQuestion({ setQuestions, Questions }: QuizProps): void {
-    const newQuestions = [
-        ...Questions,
-        {
-            id: 7,
+export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
+    const [questions, setQuestions] = useState<Question[]>(quiz.questions);
+    const [visible, setVisible] = useState<boolean>(false);
+    const [published, setPublished] = useState<boolean>(false);
+    //const [correctPoints, setCorrectPoints] = useState<number>(0);
+    function addQuestion(): void {
+        const blankQuestion: Question = {
+            id: Math.floor(Math.random() * 100),
             name: "Blank Question",
             body: "Blank Question Body",
             type: "multiple_choice_question",
-            options: [],
-            expected: "",
+            options: ["a", "b", "c", "d"],
+            expected: "c",
             points: 0,
             published: false
+            //correctPoints: 0
+        };
+        const newQuestions = [...questions, blankQuestion];
+        setQuestions(newQuestions);
+    }
+    function isVisible(): void {
+        if (visible === false) {
+            setVisible(true);
+        } else {
+            setVisible(false);
         }
-    ];
-    setQuestions(newQuestions);
-}
-
-export function Quiz({
-    name,
-    description,
-    points,
-    questions
-}: QuizInterface): JSX.Element {
-    const [Questions, setQuestions] = useState<Question[]>(spongeQuests);
+    }
+    function deleteQuiz(): void {
+        const modifiedQuiz = quizzes.filter(
+            (Quiz: QuizInterface): boolean => Quiz.quizId !== quiz.quizId
+        );
+        setQuizzes(modifiedQuiz);
+    }
+    /*
+    function checkPoints(): void {
+        questions.map((quest: Question) =>
+            quest.correctPoints > 0
+                ? setCorrectPoints(correctPoints + quest.correctPoints)
+                : setCorrectPoints(correctPoints)
+        );
+    }
+    */
     return (
         <div>
-            {questions.map((Quest: Question) => (
-                <div key={Quest.id}>
-                    <QuestionComponent
-                        id={Quest.id}
-                        name={Quest.name}
-                        body={Quest.body}
-                        type={Quest.type}
-                        options={Quest.options}
-                        expected={Quest.expected}
-                        points={Quest.points}
-                        published={Quest.published}
-                    ></QuestionComponent>
-                </div>
-            ))}
-            <Button onClick={() => addQuestion({ setQuestions, Questions })}>
+            <h3> {quiz.name} </h3>
+            <div>
                 {" "}
-                add quiz{" "}
-            </Button>
+                {quiz.description} with {questions.length} questions{" "}
+            </div>
+            {visible && (
+                <Form.Group>
+                    <Form.Check
+                        type="switch"
+                        data-testid="quiz-filter-published-check"
+                        label="Filter questions by published?"
+                        checked={published === true}
+                        onChange={() => setPublished(!published)}
+                    />
+                </Form.Group>
+            )}
+            {!visible && <Button onClick={isVisible}> enter quiz </Button>}
+            {visible && <Button onClick={isVisible}> exit quiz </Button>}
+            <Button onClick={deleteQuiz}> Delete quiz </Button>
+            <div> ----------------------------- </div>
+            {visible &&
+                !published &&
+                questions.map((quest: Question) => (
+                    <div key={quest.id}>
+                        <QuestionComponent
+                            question={quest}
+                            questions={questions}
+                            setQuestions={setQuestions}
+                        ></QuestionComponent>
+                    </div>
+                ))}
+            {visible &&
+                published &&
+                questions.map(
+                    (quest: Question) =>
+                        quest.published && (
+                            <div key={quest.id}>
+                                <QuestionComponent
+                                    question={quest}
+                                    questions={questions}
+                                    setQuestions={setQuestions}
+                                ></QuestionComponent>
+                            </div>
+                        )
+                )}
+            {visible && <Button onClick={addQuestion}> add question </Button>}
         </div>
     );
 }

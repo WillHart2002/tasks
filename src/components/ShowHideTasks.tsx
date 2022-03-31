@@ -60,7 +60,10 @@ export function ShowHideTasks(): JSX.Element {
                     <CycleHoliday></CycleHoliday>
                 </div>
             )}
-            <Button onClick={() => setVisible(!visible)}>Show/Hide</Button>
+            <Button onClick={() => setVisible(!visible)}>
+                Show/Hide tasks
+            </Button>
+            <hr></hr>
         </div>
     );
 }

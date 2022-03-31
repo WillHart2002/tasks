@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { ShowHideTasks } from "./components/ShowHideTasks";
-import { QuizList } from "./quizzer/QuizList";
+import { Quizzer } from "./quizzer/Quizzer";
 import SketchIMG from "./quizzer/Sketch2.jpg";
 
 function App(): JSX.Element {
@@ -11,7 +11,7 @@ function App(): JSX.Element {
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <ShowHideTasks></ShowHideTasks>
-            <QuizList></QuizList>
+            <Quizzer></Quizzer>
             <hr></hr>
             <h5> Quizzer sketch</h5>
             <img src={SketchIMG} alt="Should be a picture here" />

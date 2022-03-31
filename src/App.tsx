@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { ShowHideTasks } from "./components/ShowHideTasks";
 import { QuizList } from "./quizzer/QuizList";
-import SketchIMG from "./quizzer/Sketch.jpg";
+import SketchIMG from "./quizzer/Sketch2.jpg";
 
 function App(): JSX.Element {
     return (

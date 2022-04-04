@@ -2,16 +2,18 @@ import React from "react";
 import "./App.css";
 import { ShowHideTasks } from "./components/ShowHideTasks";
 import { Quizzer } from "./quizzer/Quizzer";
+import { spongeQuiz } from "./interfaces/quiz_int";
 import SketchIMG from "./quizzer/Sketch2.jpg";
 
 function App(): JSX.Element {
+    const quizzList = [spongeQuiz];
     return (
         <div className="App">
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <ShowHideTasks></ShowHideTasks>
-            <Quizzer></Quizzer>
+            <Quizzer quizList={quizzList}></Quizzer>
             <hr></hr>
             <h5> Quizzer sketch</h5>
             <img src={SketchIMG} alt="Should be a picture here" />

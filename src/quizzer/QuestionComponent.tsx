@@ -202,29 +202,47 @@ export function QuestionComponent({
                             onChange={() => newPublishedState(!publishedState)}
                         />
                     </Form.Group>
-                    <Button onClick={saveQuest}> save edit </Button>
+                    <Button onClick={saveQuest} data-testId="save-edit">
+                        {" "}
+                        save edit{" "}
+                    </Button>
                     <hr></hr>
                 </div>
             )}
             <strong data-testid="strong-quest-name">{question.name}</strong>
             <div data-testid="div-quest-points-pub">
                 {" "}
-                points: {question.points}, published:{" "}
+                points: <span> {question.points} </span>, published:{" "}
                 {question.published ? "true" : "false"}
             </div>
             <div data-testid="div-quest-body">
-                {" "}
-                hint (question body): {question.body}{" "}
+                hint (question body): <span> {question.body} </span>
             </div>
             <div data-testid="div-clear-delete-shift-buttons">
-                <Button onClick={clearAns}> Clear answer </Button>
-                <Button onClick={deleteQuest}> Delete question </Button>
-                <Button onClick={shiftQuestUp}> Shift up </Button>
-                <Button onClick={shiftQuestDown}> Shift down </Button>
+                <Button onClick={clearAns} data-testid="clear-button">
+                    {" "}
+                    Clear answer{" "}
+                </Button>
+                <Button onClick={deleteQuest} data-testid="delete-quest-button">
+                    {" "}
+                    Delete question{" "}
+                </Button>
+                <Button onClick={shiftQuestUp} data-testid="shiftup-button">
+                    {" "}
+                    Shift up{" "}
+                </Button>
+                <Button onClick={shiftQuestDown} data-testid="shiftdown-button">
+                    {" "}
+                    Shift down{" "}
+                </Button>
             </div>
             {question.type === "multiple_choice_question" ? (
                 <Form.Group controlId="multQuestion">
-                    <Form.Select value={response} onChange={updateResponse}>
+                    <Form.Select
+                        value={response}
+                        onChange={updateResponse}
+                        data-testId="dropDown"
+                    >
                         {question.options.map((choice: string) => (
                             <option key={choice} value={choice}>
                                 {choice}

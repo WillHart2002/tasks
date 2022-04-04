@@ -67,7 +67,8 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
             <h3> {nameState} </h3>
             <div>
                 {" "}
-                {desState} with {questions.length} questions{" "}
+                <span> {desState} </span> with <span> {questions.length} </span>{" "}
+                questions{" "}
             </div>
             <div data-testid="div-quizEdit-switch">
                 <Form.Check
@@ -118,9 +119,22 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
                     />
                 </Form.Group>
             )}
-            {!visible && <Button onClick={isVisible}> enter quiz </Button>}
-            {visible && <Button onClick={isVisible}> exit quiz </Button>}
-            <Button onClick={deleteQuiz}> Delete quiz </Button>
+            {!visible && (
+                <Button onClick={isVisible} data-testId="enter-button">
+                    {" "}
+                    enter quiz{" "}
+                </Button>
+            )}
+            {visible && (
+                <Button onClick={isVisible} data-testId="exit-button">
+                    {" "}
+                    exit quiz{" "}
+                </Button>
+            )}
+            <Button onClick={deleteQuiz} data-testId="delete-quiz-button">
+                {" "}
+                Delete quiz{" "}
+            </Button>
             <div> ----------------------------- </div>
             {visible &&
                 !published &&
@@ -147,7 +161,12 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
                             </div>
                         )
                 )}
-            {visible && <Button onClick={addQuestion}> add question </Button>}
+            {visible && (
+                <Button onClick={addQuestion} data-testId="add-question-button">
+                    {" "}
+                    add question{" "}
+                </Button>
+            )}
         </div>
     );
 }

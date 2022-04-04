@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 //import { Question } from "../interfaces/myQuestion";
 import { QuizInterface } from "../interfaces/quiz_int";
-import { spongeQuiz } from "../interfaces/quiz_int";
+//import { spongeQuiz } from "../interfaces/quiz_int";
 import { Quiz } from "./Quiz";
 
-export function Quizzer(): JSX.Element {
-    const [quizzes, setQuizzes] = useState<QuizInterface[]>([spongeQuiz]);
+export function Quizzer({
+    quizList
+}: {
+    quizList: QuizInterface[];
+}): JSX.Element {
+    const [quizzes, setQuizzes] = useState<QuizInterface[]>(quizList);
     //const [totalPoints, setTotalPoints] = useState<number>(0);
     function addQuiz(): void {
         const newQuizzes = [
@@ -42,7 +46,7 @@ export function Quizzer(): JSX.Element {
             </span>
             <hr></hr>
             {quizzes.map((quiz: QuizInterface) => (
-                <div key={quiz.name}>
+                <div data-testId="div-quiz" key={quiz.name}>
                     <Quiz
                         quiz={quiz}
                         quizzes={quizzes}
@@ -51,7 +55,10 @@ export function Quizzer(): JSX.Element {
                     <hr></hr>
                 </div>
             ))}
-            <Button onClick={addQuiz}> add Quiz </Button>
+            <Button onClick={addQuiz} data-testId="add-quiz-button">
+                {" "}
+                add Quiz{" "}
+            </Button>
         </div>
     );
 }

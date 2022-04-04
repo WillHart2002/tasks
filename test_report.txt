@@ -5,8 +5,50 @@
 PASS src/nested.test.ts
 PASS src/arrays.test.ts
 PASS src/objects.test.ts
+PASS src/quizzer/Quizzer.test.tsx
+  ● Console
+
+    console.error
+      Warning: React does not recognize the `data-testId` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `data-testid` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at button
+          at /home/runner/work/tasks/tasks/node_modules/react-bootstrap/cjs/Button.js:28:3
+          at div
+          at Quiz (/home/runner/work/tasks/tasks/src/quizzer/Quiz.tsx:18:24)
+          at div
+          at div
+          at Quizzer (/home/runner/work/tasks/tasks/src/quizzer/Quizzer.tsx:9:5)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+      at finalizeInitialChildren (node_modules/react-dom/cjs/react-dom.development.js:10201:3)
+
 PASS src/components/StartAttempt.test.tsx
 PASS src/components/TwoDice.test.tsx
+PASS src/quizzer/QuestionComponent.test.tsx
+  ● Console
+
+    console.error
+      Warning: React does not recognize the `data-testId` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `data-testid` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at button
+          at /home/runner/work/tasks/tasks/node_modules/react-bootstrap/cjs/Button.js:28:3
+          at div
+          at div
+          at QuestionComponent (/home/runner/work/tasks/tasks/src/quizzer/QuestionComponent.tsx:18:5)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+      at finalizeInitialChildren (node_modules/react-dom/cjs/react-dom.development.js:10201:3)
+
 PASS src/form-components/MultipleChoiceQuestion.test.tsx
 PASS src/bad-components/ChooseTeam.test.tsx
 PASS src/bad-components/DoubleHalf.test.tsx
@@ -21,38 +63,34 @@ PASS src/components/Counter.test.tsx
 PASS src/components/RevealAnswer.test.tsx
 PASS src/bad-components/ColoredBox.test.tsx
 PASS src/bad-components/ShoveBox.test.tsx
-FAIL src/quizzer/Quizzer.test.tsx
-  ● Sketch test › The sketch renders
-
-    TestingLibraryElementError: Unable to find an element with the alt text: Should be a picture here
-
-    Ignored nodes: comments, <script />, <style />
-    [36m<body>[39m
-      [36m<div>[39m
-        [36m<h3>[39m
-          [0mQuizzer[0m
-        [36m</h3>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-
-      18 |     });
-      19 |     test("The sketch renders", () => {
-    > 20 |         const isImg = screen.getAllByAltText("Should be a picture here");
-         |                              ^
-      21 |         expect(isImg).toEqual("Should be a picture here");
-      22 |     });
-      23 | });
-
-      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
-      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
-      at getAllByAltText (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
-      at Object.<anonymous> (src/quizzer/Quizzer.test.tsx:20:30)
-
 PASS src/App.test.tsx
+  ● Console
+
+    console.error
+      Warning: React does not recognize the `data-testId` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `data-testid` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at button
+          at /home/runner/work/tasks/tasks/node_modules/react-bootstrap/cjs/Button.js:28:3
+          at div
+          at Quiz (/home/runner/work/tasks/tasks/src/quizzer/Quiz.tsx:18:24)
+          at div
+          at div
+          at Quizzer (/home/runner/work/tasks/tasks/src/quizzer/Quizzer.tsx:9:5)
+          at div
+          at App
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+      at finalizeInitialChildren (node_modules/react-dom/cjs/react-dom.development.js:10201:3)
+
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------------|---------|----------|---------|---------|-------------------
-All files                    |    82.8 |    80.33 |   81.32 |   82.09 |                   
+All files                    |   94.27 |    93.88 |   93.45 |   94.03 |                   
  src                         |   99.48 |    98.68 |     100 |   99.44 |                   
   App.tsx                    |     100 |      100 |     100 |     100 |                   
   arrays.ts                  |     100 |      100 |     100 |     100 |                   
@@ -69,7 +107,7 @@ All files                    |    82.8 |    80.33 |   81.32 |   82.09 |
   Counter.tsx                |     100 |      100 |     100 |     100 |                   
   CycleHoliday.tsx           |     100 |      100 |     100 |     100 |                   
   RevealAnswer.tsx           |     100 |      100 |     100 |     100 |                   
-  ShowHideTasks.tsx          |   66.66 |       50 |      50 |   66.66 | 63                
+  ShowHideTasks.tsx          |   66.66 |       50 |      50 |   66.66 | 62                
   StartAttempt.tsx           |     100 |      100 |     100 |     100 |                   
   TwoDice.tsx                |     100 |      100 |     100 |     100 |                   
  src/form-components         |     100 |      100 |     100 |     100 |                   
@@ -85,44 +123,14 @@ All files                    |    82.8 |    80.33 |   81.32 |   82.09 |
   question.ts                |       0 |        0 |       0 |       0 |                   
   quiz_int.ts                |     100 |      100 |     100 |     100 |                   
   shortQuest.ts              |       0 |        0 |       0 |       0 |                   
- src/quizzer                 |   11.42 |    18.42 |   11.76 |   11.42 |                   
-  QuestionComponent.tsx      |       0 |        0 |       0 |       0 | 22-229            
-  Quiz.tsx                   |      25 |    38.88 |    12.5 |      25 | 20-45,70-93       
-  QuizList.tsx               |      60 |      100 |   66.66 |      60 | 12-22             
+ src/quizzer                 |   74.66 |     82.5 |   72.22 |   74.66 |                   
+  QuestionComponent.tsx      |   66.66 |       70 |   68.18 |   66.66 | 47,54-74,179      
+  Quiz.tsx                   |   86.36 |       95 |   72.72 |   86.36 | 80-103            
   Quizzer.tsx                |     100 |      100 |     100 |     100 |                   
 -----------------------------|---------|----------|---------|---------|-------------------
 
-Summary of all failing tests
-FAIL src/quizzer/Quizzer.test.tsx
-  ● Sketch test › The sketch renders
-
-    TestingLibraryElementError: Unable to find an element with the alt text: Should be a picture here
-
-    Ignored nodes: comments, <script />, <style />
-    [36m<body>[39m
-      [36m<div>[39m
-        [36m<h3>[39m
-          [0mQuizzer[0m
-        [36m</h3>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-
-      18 |     });
-      19 |     test("The sketch renders", () => {
-    > 20 |         const isImg = screen.getAllByAltText("Should be a picture here");
-         |                              ^
-      21 |         expect(isImg).toEqual("Should be a picture here");
-      22 |     });
-      23 | });
-
-      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
-      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
-      at getAllByAltText (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
-      at Object.<anonymous> (src/quizzer/Quizzer.test.tsx:20:30)
-
-
-Test Suites: 1 failed, 20 passed, 21 total
-Tests:       1 failed, 135 passed, 136 total
+Test Suites: 22 passed, 22 total
+Tests:       156 passed, 156 total
 Snapshots:   0 total
-Time:        13.348 s
+Time:        13.856 s
 Ran all test suites.

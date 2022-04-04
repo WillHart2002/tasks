@@ -16,7 +16,7 @@ import { GiveAttempts } from "../form-components/GiveAttempts";
 import { EditMode } from "../form-components/EditMode";
 import { MultipleChoiceQuestion } from "../form-components/MultipleChoiceQuestion";
 import { ChangeColor } from "../form-components/ChangeColor";
-import { Quizzer } from "../quizzer/Quizzer";
+//import { Quizzer } from "../quizzer/Quizzer";
 
 export function ShowHideTasks(): JSX.Element {
     const [visible, setVisible] = useState<boolean>(false);
@@ -24,7 +24,6 @@ export function ShowHideTasks(): JSX.Element {
         <div>
             {visible && (
                 <div>
-                    <Quizzer></Quizzer>
                     <hr></hr>
                     <CheckAnswer expectedAnswer="42"></CheckAnswer>
                     <hr></hr>

@@ -5,6 +5,10 @@ import { Question } from "../interfaces/myQuestion";
 import { QuizInterface } from "../interfaces/quiz_int";
 import { QuestionComponent } from "./QuestionComponent";
 
+type ChangeEvent = React.ChangeEvent<
+    HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+>;
+
 interface QuizProps {
     quiz: QuizInterface;
     quizzes: QuizInterface[];
@@ -15,6 +19,11 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
     const [questions, setQuestions] = useState<Question[]>(quiz.questions);
     const [visible, setVisible] = useState<boolean>(false);
     const [published, setPublished] = useState<boolean>(false);
+    //editable components for a quiz
+    const [nameState, newNameState] = useState<string>(quiz.name);
+    const [desState, newDesState] = useState<string>(quiz.description);
+    const [editMode, setEditMode] = useState<boolean>(false);
+    //seeeesh
     //const [correctPoints, setCorrectPoints] = useState<number>(0);
     function addQuestion(): void {
         const blankQuestion: Question = {
@@ -55,11 +64,50 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
     */
     return (
         <div>
-            <h3> {quiz.name} </h3>
+            <h3> {nameState} </h3>
             <div>
                 {" "}
-                {quiz.description} with {questions.length} questions{" "}
+                <span> {desState} </span> with <span> {questions.length} </span>{" "}
+                questions{" "}
             </div>
+            <div data-testid="div-quizEdit-switch">
+                <Form.Check
+                    data-testid="quizEdit-switch"
+                    type="switch"
+                    id="editMode"
+                    label="Edit quiz?"
+                    checked={editMode}
+                    onChange={() => setEditMode(!editMode)}
+                />
+            </div>
+            {editMode && (
+                <div>
+                    <hr></hr>
+                    <Form.Group controlId="quiz-group">
+                        <Form.Label> Quiz name </Form.Label>
+                        <Form.Control
+                            data-testid="quizName-control"
+                            type="text"
+                            value={nameState}
+                            onChange={(event: ChangeEvent) =>
+                                newNameState(event.target.value)
+                            }
+                            disabled={!editMode}
+                        />
+                        <Form.Label> Quiz description </Form.Label>
+                        <Form.Control
+                            data-testid="questDescription-control"
+                            type="text"
+                            value={desState}
+                            onChange={(event: ChangeEvent) =>
+                                newDesState(event.target.value)
+                            }
+                            disabled={!editMode}
+                        />
+                    </Form.Group>
+                    <hr></hr>
+                </div>
+            )}
             {visible && (
                 <Form.Group>
                     <Form.Check
@@ -71,9 +119,22 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
                     />
                 </Form.Group>
             )}
-            {!visible && <Button onClick={isVisible}> enter quiz </Button>}
-            {visible && <Button onClick={isVisible}> exit quiz </Button>}
-            <Button onClick={deleteQuiz}> Delete quiz </Button>
+            {!visible && (
+                <Button onClick={isVisible} data-testId="enter-button">
+                    {" "}
+                    enter quiz{" "}
+                </Button>
+            )}
+            {visible && (
+                <Button onClick={isVisible} data-testId="exit-button">
+                    {" "}
+                    exit quiz{" "}
+                </Button>
+            )}
+            <Button onClick={deleteQuiz} data-testId="delete-quiz-button">
+                {" "}
+                Delete quiz{" "}
+            </Button>
             <div> ----------------------------- </div>
             {visible &&
                 !published &&
@@ -100,7 +161,12 @@ export function Quiz({ quiz, quizzes, setQuizzes }: QuizProps): JSX.Element {
                             </div>
                         )
                 )}
-            {visible && <Button onClick={addQuestion}> add question </Button>}
+            {visible && (
+                <Button onClick={addQuestion} data-testId="add-question-button">
+                    {" "}
+                    add question{" "}
+                </Button>
+            )}
         </div>
     );
 }

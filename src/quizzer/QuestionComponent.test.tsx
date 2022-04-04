@@ -25,7 +25,7 @@ describe("QuestionComponent tests", () => {
             ></QuestionComponent>
         );
     });
-    test("Does editi switch work", () => {
+    test("Does edit switch work", () => {
         let editName = screen.queryByTestId("questName-control");
         let editBody = screen.queryByTestId("questBody-control");
         let editType = screen.queryByTestId("questType-check");
@@ -65,7 +65,6 @@ describe("QuestionComponent tests", () => {
         const name = screen.getByText("What up?");
         expect(name).toBeInTheDocument();
     });
-    /*
     test("Is the quesiton body shown", () => {
         const body = screen.getByText("rhymes with bye");
         expect(body).toBeInTheDocument();
@@ -74,11 +73,12 @@ describe("QuestionComponent tests", () => {
         const points = screen.getByText("10");
         expect(points).toBeInTheDocument();
     });
-    */
     test("Is the clear button working", () => {
         const freeResponse = screen.getByRole("textbox");
         const clearButton = screen.getByTestId("clear-button");
         userEvent.type(freeResponse, "answer");
+        const ans = screen.queryByText("answer");
         clearButton.click();
+        expect(ans).not.toBeInTheDocument();
     });
 });

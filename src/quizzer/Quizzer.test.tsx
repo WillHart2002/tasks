@@ -84,7 +84,7 @@ describe("Quizzer Tests", () => {
         expect(enterQuiz).toBeInTheDocument();
         expect(exitQuiz).not.toBeInTheDocument();
     });
-    test("The delete button exists and works", () => {
+    test("The delete quiz button exists and works", () => {
         const deleteQuiz = screen.getByTestId("delete-quiz-button");
         expect(deleteQuiz).toBeInTheDocument();
         deleteQuiz.click();
@@ -118,7 +118,7 @@ describe("Quizzer Tests", () => {
         const blankQuest = screen.queryByText("Blank Question");
         expect(blankQuest).toBeInTheDocument();
     });
-    test("Does the delete button exist and work", () => {
+    test("Does the delete question button exist and work", () => {
         const enterQuiz = screen.getByTestId("enter-button");
         enterQuiz.click();
         let deleteQuestButtons = screen.queryAllByTestId("delete-quest-button");
@@ -135,6 +135,16 @@ describe("Quizzer Tests", () => {
         expect(quest2).toBeInTheDocument();
         expect(quest3).toBeInTheDocument();
     });
+    /*
+    test("Does the move up button exist and work", () => {
+        const enterQuiz = screen.getByTestId("enter-button");
+        enterQuiz.click();
+        const questOrder = screen.queryByText(
+            "What's up?What's down?What's around?"
+        );
+        expect(questOrder).toBeInTheDocument();
+    });
+    */
     //Editing test
     test("Does editing question name work", () => {
         const enterQuiz = screen.getByTestId("enter-button");
@@ -226,8 +236,6 @@ describe("Quizzer Tests", () => {
         const questComp = screen.getAllByTestId("div-question-Component");
         expect(questComp.length).toBe(1);
     });
-    //edit expected (checkmark)
-    //
     /*
     test("", () => {
         const enterQuiz = screen.getByTestId("enter-button");
